@@ -10,34 +10,44 @@
 
 <body>
 
-	<div id="display"></div>
-	<div id="result"></div>
+	<div class="containerApp">
 
-	<div class="container-buttons">
-		<button class="operator" data-value="+">+</button>
-		<button class="operator" data-value="-">-</button>
-		<button class="operator" data-value="*">*</button>
-		<button class="operator" data-value="/">/</button>
-
-		<button class="digit" data-value="0">0</button>
-		<button class="digit" data-value="1">1</button>
-		<button class="digit" data-value="2">2</button>
-		<button class="digit" data-value="3">3</button>
-		<button class="digit" data-value="4">4</button>
-		<button class="digit" data-value="5">5</button>
-		<button class="digit" data-value="6">6</button>
-		<button class="digit" data-value="7">7</button>
-		<button class="digit" data-value="8">8</button>
-		<button class="digit" data-value="9">9</button>
-		<button class="digit" data-value=".">,</button>	
-
-		<button id="equals">=</button>
-		<button id="clear">c</button>
+	<div class="screen">
+		<div id="display"></div>
+		<div id="result"></div>
 	</div>
-	
-	
-	
+
+		<div class="container-buttons">
+			<button id="clear">C</button>
+			<div></div>
+			<div></div>
+			<button class="operator" data-value="/">÷</button>
+
+			<button class="digit" data-value="7">7</button>
+			<button class="digit" data-value="8">8</button>
+			<button class="digit" data-value="9">9</button>
+			<button class="operator" data-value="*">×</button>
+
+			<button class="digit" data-value="4">4</button>
+			<button class="digit" data-value="5">5</button>
+			<button class="digit" data-value="6">6</button>
+			<button class="operator" data-value="-">−</button>
+
+			<button class="digit" data-value="1">1</button>
+			<button class="digit" data-value="2">2</button>
+			<button class="digit" data-value="3">3</button>
+			<button class="operator" data-value="+">+</button>
+
+			<button class="digit" data-value="0">0</button>
+			<button class="digit" data-value=".">.</button>
+			<button id="delete">⌫</button>
+			<button id="equals">=</button>
+		</div>
+
+	</div>
+
 	<script src="script.js"></script>
+
 </body>
 
 </html>

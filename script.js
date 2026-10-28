@@ -14,6 +14,7 @@ function divide(a, b) {
 	return a / b;	
 }
 
+// Recibe un operador y dos números, y devuelve el resultado de la operación que corresponde (suma, resta, multiplicación o división)
 function operate(operator, a, b) {
 	if (operator === "+") {
 		return add(a, b);
@@ -26,13 +27,15 @@ function operate(operator, a, b) {
 	}
 }
 
-const display = document.getElementById("display");
+const display = document.querySelector("#display");
 const equalButton = document.querySelector("#equals");
 const clearButton = document.querySelector("#clear");
+const deleteButton = document.querySelector("#delete");
 const resultBox = document.querySelector("#result");
 
 const digitButtons = document.querySelectorAll(".digit");
 const operatorButtons = document.querySelectorAll(".operator");
+
 
 let firstNumber = 0;
 let operatorResult = "";
@@ -40,19 +43,24 @@ let currentNumber = "";
 let endOperate = false;
 
 
-// Al pulsar un dígito: se añade a la pantalla y al número que se está escribiendo (currentNumber)
+// Al pulsar un dígito: si ya se pulsó igual (endOperate es true) no hace nada; si es un punto y el número ya tiene uno, tampoco; si no, lo añade a la pantalla y al número que se está escribiendo (currentNumber)
 digitButtons.forEach((digitButton) => {
 	
 	digitButton.addEventListener("click", function () {	
 		if(endOperate === true) {
-		return;
-	}	
+			return;
+    	}
+		
+		if (digitButton.dataset.value === "." && (currentNumber === "" || currentNumber.includes("."))) {
+			return;
+		}
+		
 		display.textContent += digitButton.dataset.value;
 		currentNumber += digitButton.dataset.value;
 	} )	
 });
 
-// Al pulsar un operador: calcula la operación pendiente si la hay, guarda el operador y lo añade a la pantalla
+// Al pulsar un operador: si la pantalla está vacía no hace nada; si se pulsa un operador tras otro, sustituye el anterior; si hay una operación pendiente la calcula; guarda el operador y lo añade a la pantalla
 operatorButtons.forEach((operatorButton) => {
 	operatorButton.addEventListener("click", function () {
 
@@ -67,8 +75,8 @@ operatorButtons.forEach((operatorButton) => {
 		}else if (currentNumber !=="" ){
 			firstNumber = Number(currentNumber);
 			currentNumber = "";
-		}					
-
+		}
+		
 		operatorResult = operatorButton.dataset.value;		
 		display.textContent += operatorResult;
 		
@@ -78,7 +86,7 @@ operatorButtons.forEach((operatorButton) => {
 // Al pulsar igual: sin operador no hace nada; si divide entre cero avisa; si ya se pulsó igual no repite; si no, calcula con operate, muestra el resultado y bloquea los dígitos (endOperate)
 equalButton.addEventListener("click", function () {	
 
-	if(operatorResult === ""){
+	if (operatorResult === ""){
 		return;
 	}
 
@@ -96,6 +104,7 @@ equalButton.addEventListener("click", function () {
 	endOperate = true;	
 });
 
+// Al pulsar clear: vacía la pantalla y el resultado, y devuelve todas las variables a su valor inicial (incluido endOperate, para poder escribir dígitos otra vez)
 clearButton.addEventListener("click", function () {
 	display.textContent = "";
 	resultBox.textContent = "";
@@ -104,6 +113,41 @@ clearButton.addEventListener("click", function () {
 	currentNumber = "";
 	endOperate = false;
 });
+
+deleteButton.addEventListener("click", function () {
+	if (endOperate === true) {
+		return;
+	}
+	if (currentNumber === "") {
+		return;
+	}
+
+	display.textContent = display.textContent.slice(0, -1);
+	currentNumber = currentNumber.slice(0, -1);
+
+});
+
+
+// Al pulsar una tecla: si coincide con el data-value de un botón (dígitos, operadores y punto) hace clic en él; Enter hace clic en igual, Backspace en borrar y Escape en clear
+document.addEventListener("keydown", function (event) {
+
+	const button = document.querySelector(`[data-value="${event.key}"]`);
+
+	if (button !== null) {
+		button.click();
+	}
+	if (event.key === "Enter") {
+		equalButton.click();
+	}
+	if (event.key === "Backspace") {
+		deleteButton.click();
+	}
+	if (event.key === "Escape") {
+		clearButton.click();
+	}
+});
+
+
 
 
 
